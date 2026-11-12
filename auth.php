@@ -328,15 +328,21 @@ class auth_plugin_casattras extends auth_plugin_base {
         $config = get_config('auth_casattras');
         $params = ["authCASattras" => "CASattras"];
         $url = new moodle_url(get_login_url(), $params);
-        $iconurl = moodle_url::make_pluginfile_url(
-            context_system::instance()->id,
-            'auth_casattras',
-            'logo',
-            null,
-            '/',
-            $config->auth_logo
-        );
+        if ($config->auth_logo) {
+            $iconurl = moodle_url::make_pluginfile_url(
+                context_system::instance()->id,
+                'auth_casattras',
+                'logo',
+                null,
+                '/',
+                $config->auth_logo
+            );
+        }
+        else {
+            $iconurl = '';
+        }
         $result[] = ['url' => $url, 'iconurl' => $iconurl, 'name' => $config->auth_name];
+
         return $result;
     }
 }
